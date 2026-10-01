@@ -1,43 +1,60 @@
-
 .tela-review {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #000;
-  position: relative;
   align-items: center;
-  padding-top: 40px;
+  position: relative;
+  padding-top: 32px;
+  color: var(--text-main, #f8fafc);
+  background-color: var(--bg-app, #0f172a);
+  background-image:
+    radial-gradient(circle at 50% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 55%);
+  box-sizing: border-box;
 }
 
 .tela-review h2 {
-  font-size: 1.5rem;
-  color: #fff;
-  margin-bottom: 20px;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-main, #f8fafc);
+  margin: 0 0 20px;
 }
 
 .lista-review {
-  width: 90%;
+  width: 92%;
   flex: 1;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding-bottom: 120px;
+  gap: 16px;
+  padding-bottom: 160px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color, #334155) transparent;
 }
 
+.lista-review::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lista-review::-webkit-scrollbar-thumb {
+  background: var(--border-color, #334155);
+  border-radius: 10px;
+}
+
+/* Card de cada item do pedido */
 .nota-fiscal-container {
-  background-color: transparent;
-  border: 1px solid #777;
-  border-radius: 2px;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg-panel, #1e293b);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
 .item-review-linha {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid #777;
+  border-bottom: 1px solid var(--border-color, #334155);
 }
 
 .item-review-linha:last-child {
@@ -47,109 +64,165 @@
 .item-review-topo {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #fff;
-  border-bottom: 1px dashed #777;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main, #f8fafc);
+  border-bottom: 1px dashed var(--border-hover, #475569);
 }
 
 .item-review-acoes {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #0b1b3d;
+  padding: 12px 16px;
+  background-color: rgba(15, 23, 42, 0.55);
 }
 
 .btn-remover {
-  background-color: #c00;
-  color: white;
-  border: 1px solid #333;
-  padding: 5px 15px;
-  border-radius: 2px;
-  font-weight: bold;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-remover:hover {
+  background-color: var(--accent-red, #ef4444);
+  border-color: var(--accent-red, #ef4444);
+  color: #ffffff;
 }
 
 .review-qty-controls {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background-color: #ccc;
-  padding: 2px 5px;
-  border-radius: 2px;
-  font-weight: bold;
+  gap: 14px;
+  padding: 4px 8px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-main, #f8fafc);
+  background-color: var(--bg-app, #0f172a);
+  border: 1px solid var(--border-color, #334155);
+  border-radius: 40px;
 }
 
 .review-qty-controls button {
-  background-color: #bbb;
-  border: 1px solid #333;
-  width: 25px;
-  height: 25px;
-  border-radius: 3px;
-  color: white;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 50%;
   cursor: pointer;
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s ease;
+}
+
+.review-qty-controls button:hover {
+  transform: scale(1.1);
 }
 
 .btn-modificar {
-  background-color: white; background-color: #1d3557;
-  color: white;
-  border: 1px solid #333;
-  padding: 5px 15px;
-  border-radius: 2px;
-  font-weight: bold;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #93c5fd;
+  background-color: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.2s ease;
 }
 
+.btn-modificar:hover {
+  background-color: var(--accent-blue, #2563eb);
+  border-color: var(--accent-blue, #2563eb);
+  color: #ffffff;
+}
+
+/* Rodapé fixo com total e botões */
 .review-rodape-cinza {
   position: absolute;
   bottom: 0;
+  left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
+  background: rgba(30, 41, 59, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border-color, #334155);
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
 }
 
 .review-totais {
-  background-color: #b5c2cd;
-  padding: 5px 20px;
+  padding: 14px 24px 4px;
   text-align: right;
-  font-weight: bold;
-  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent-green, #10b981);
 }
 
 .review-botoes-finais {
-  background-color: #d3deea;
-  padding: 15px;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 14px;
+  padding: 12px 20px 20px;
 }
 
 .btn-retornar {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #999;
-  border-radius: 4px;
-  background-color: transparent;
-  color: white; background-color: #900;
-  font-weight: bold;
+  padding: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 14px;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-retornar:hover {
+  background-color: var(--accent-red, #ef4444);
+  border-color: var(--accent-red, #ef4444);
+  color: #ffffff;
 }
 
 .btn-pagar {
   flex: 1;
-  padding: 10px;
-  border: 1px solid #999;
-  border-radius: 4px;
-  background-color: transparent;
-  color: white; background-color: #1d3557;
-  font-weight: bold;
+  padding: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: none;
+  border-radius: 14px;
   cursor: pointer;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s ease;
 }
 
-.btn-remover:active, .btn-modificar:active, .btn-retornar:active, .btn-pagar:active, .review-qty-controls button:active {
+.btn-pagar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+}
+
+.btn-remover:active,
+.btn-modificar:active,
+.btn-retornar:active,
+.btn-pagar:active,
+.review-qty-controls button:active {
   transform: scale(0.95);
 }

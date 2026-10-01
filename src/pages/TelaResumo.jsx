@@ -7,6 +7,14 @@ export default function TelaResumo({ carrinho, setCarrinho, executarComAtraso, s
   const navegar = useNavigate();
   const totalCarrinho = carrinho.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
+  // Função para remover um item do carrinho usando .filter()
+  const removerItem = (indiceParaRemover) => {
+    executarComAtraso(() => {
+      const novoCarrinho = carrinho.filter((_, indice) => indice !== indiceParaRemover);
+      setCarrinho(novoCarrinho);
+    });
+  };
+
   return (
     <div className={styles["tela-review"]}>
       <h2>Seu pedido está correto?</h2>
@@ -15,11 +23,12 @@ export default function TelaResumo({ carrinho, setCarrinho, executarComAtraso, s
         <div className={styles["nota-fiscal-container"]}>
           {carrinho.map((item, indice) => (
             <ResumoItemLinha 
-              key={indice}
+              key={item.idCarrinho || indice}
               item={item}
               indice={indice}
               carrinho={carrinho}
               setCarrinho={setCarrinho}
+              removerItem={removerItem}
               executarComAtraso={executarComAtraso}
               setItemParaModificar={setItemParaModificar}
               setIndiceModificacao={setIndiceModificacao}
@@ -31,7 +40,7 @@ export default function TelaResumo({ carrinho, setCarrinho, executarComAtraso, s
 
       <div className={styles["review-rodape-cinza"]}>
         <div className={styles["review-totais"]}>
-          <span>Total {totalCarrinho.toFixed(2).replace('.', ',')}</span>
+          <span>Total R$ {totalCarrinho.toFixed(2).replace('.', ',')}</span>
         </div>
         <div className={styles["review-botoes-finais"]}>
           <button className={styles["btn-retornar"]} onClick={() => executarComAtraso(() => navegar('/menu'))}>Retornar</button>

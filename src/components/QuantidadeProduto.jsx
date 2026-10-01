@@ -9,7 +9,10 @@ export default function QuantidadeProduto({
     <div className={styles["quantity-container"]}>
       <button className={styles["btn-voltar-inline"]} onClick={() => executarComAtraso(() => setVariacaoSelecionada(null))}>Voltar</button>
       <h2 style={{ fontSize: '2rem' }}>{produtoAtivo.name} ({variacaoSelecionada.nome})</h2>
-      <div className={styles["produto-img"]} style={{ fontSize: '8rem', margin: '30px 0' }}>{produtoAtivo.image}</div>
+
+      <div className={styles["produto-img"]} style={{ margin: '30px 0' }}>
+        <img src={produtoAtivo.image} alt={produtoAtivo.name} style={{ height: '200px' }} />
+      </div>
 
       <div className={styles["quantity-controls"]}>
         <button className={styles["btn-qty"]} onClick={() => setQuantidade(Math.max(1, quantidade - 1))}>-</button>

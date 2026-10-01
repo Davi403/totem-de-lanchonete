@@ -1,61 +1,315 @@
+/* ==========================================================================
+   VARIÁVEIS DE TEMA E DESIGN SYSTEM
+   ========================================================================== */
+:root {
+  /* Paleta Base Escura Modernizada */
+  --bg-primary: #070a13;
+  --bg-secondary: #0d1527;
+  --card-bg: rgba(15, 23, 42, 0.75);
+  --card-bg-hover: rgba(30, 41, 59, 0.85);
 
-.tela-local {
-  height: 100%;
+  /* Bordas e Divisores */
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-hover-border: rgba(99, 102, 241, 0.5);
+
+  /* Cores de Destaque / Gradientes */
+  --accent-primary: #3b82f6;
+  --accent-secondary: #6366f1;
+  --accent-gradient: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+  --accent-glow: rgba(99, 102, 241, 0.35);
+
+  /* Tipografia */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Status / Ações */
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --success-color: #10b981;
+
+  /* Efeitos e Animações */
+  --radius-lg: 20px;
+  --radius-md: 12px;
+  --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px var(--accent-glow);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ==========================================================================
+   LAYOUT GERAL DA TELA
+   ========================================================================== */
+.tela-local,
+.tela-menu {
+  min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #000;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+  color: var(--text-primary);
+  padding: 24px;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
 }
 
 .titulo {
-  font-size: 2rem;
-  color: #fff;
-  margin-bottom: 40px;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 36px;
+  letter-spacing: -0.02em;
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
+/* ==========================================================================
+   TELA DE SELEÇÃO INICIAL (CARDS DE LOCAL/OPÇÕES)
+   ========================================================================== */
 .opcoes-local {
   display: flex;
-  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .opcao-card {
-  width: 180px;
-  height: 220px;
-  background-color: #0b1b3d;
-  border-radius: 4px;
+  width: 100%;
+  max-width: 240px;
+  height: 280px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  transition: transform 0.1s;
+  padding: 24px;
+  box-sizing: border-box;
+  box-shadow: var(--shadow-soft);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brilho interno sutil nos cards ao passar o mouse */
+.opcao-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: 0.5s;
+}
+
+.opcao-card:hover::before {
+  left: 100%;
+}
+
+.opcao-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  border-color: var(--card-hover-border);
+  background: var(--card-bg-hover);
+  box-shadow: var(--shadow-glow), var(--shadow-soft);
 }
 
 .opcao-card:active {
-  transform: scale(0.92);
+  transform: translateY(-2px) scale(0.98);
 }
 
 .icone-local {
-  font-size: 5rem;
+  font-size: clamp(3.5rem, 6vw, 5rem);
   margin-bottom: 20px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  user-select: none;
+}
+
+.opcao-card:hover .icone-local {
+  transform: scale(1.15) rotate(3deg);
 }
 
 .opcao-card h2 {
-  font-size: 1.2rem;
-  color: #fff;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  text-align: center;
 }
 
+/* ==========================================================================
+   ESTRUTURA DO MENU (GRID PRINCIPAL)
+   ========================================================================== */
+.menu-container {
+  display: flex;
+  flex: 1;
+  gap: 24px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 100px; /* Espaço livre para o rodapé fixo */
+}
+
+.menu-lateral {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.menu-produtos {
+  flex: 1;
+  width: 100%;
+}
+
+.produtos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* ==========================================================================
+   RODAPÉ DE PEDIDO (FIXO E ESTILIZADO)
+   ========================================================================== */
+.menu-rodape {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 48px);
+  max-width: 1200px;
+  background: rgba(13, 21, 39, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+}
+
+.info-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.valor-total {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.qtd-itens {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.botoes-rodape {
+  display: flex;
+  gap: 14px;
+}
+
+.btn-cancelar {
+  background: transparent;
+  border: 1px solid var(--card-border);
+  color: var(--text-secondary);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-cancelar:hover {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+.btn-concluir {
+  background: var(--accent-gradient);
+  border: none;
+  color: #ffffff;
+  padding: 12px 28px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.35);
+  transition: var(--transition-smooth);
+}
+
+.btn-concluir:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.btn-concluir:disabled {
+  background: #1e293b;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE E ADAPTAÇÃO
+   ========================================================================== */
 @media (min-width: 600px) {
+  .opcoes-local {
+    gap: 32px;
+  }
+
   .opcao-card {
-    width: 280px;
+    max-width: 280px;
     height: 320px;
   }
-  .icone-local {
-    font-size: 10rem;
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    flex-direction: column;
   }
-  .opcao-card h2 {
-    font-size: 2rem;
+
+  .menu-lateral {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .menu-rodape {
+    bottom: 12px;
+    width: calc(100% - 24px);
+    padding: 12px 16px;
+  }
+
+  .valor-total {
+    font-size: 1.15rem;
+  }
+
+  .btn-cancelar,
+  .btn-concluir {
+    padding: 10px 16px;
+    font-size: 0.85rem;
   }
 }

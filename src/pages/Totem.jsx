@@ -31,6 +31,8 @@ export default function Totem() {
     }, 150);
   };
 
+
+
   useEffect(() => {
     setCategorias(categoriasDados);
     if (categoriasDados.length > 0) setCategoriaSelecionada(categoriasDados[0].id);

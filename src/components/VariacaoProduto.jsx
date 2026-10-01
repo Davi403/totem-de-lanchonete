@@ -8,43 +8,38 @@ export default function VariacaoProduto({ produtoAtivo, selecionarVariacao, exec
       <button className={styles["btn-voltar-inline"]} onClick={() => executarComAtraso(() => setProdutoAtivo(null))}>Voltar</button>
       <h2>Escolha a opção:</h2>
       <div className={styles["produtos-grid"]}>
-        {produtoAtivo.category.name.includes('Filmes') ? (
+        {produtoAtivo.category.name.includes('Lanches') ? (
           <>
             <ProdutoCard
               produto={produtoAtivo}
-              onClick={() => selecionarVariacao('Meia-Entrada', 0)}
-              nomeOpcao="Meia-Entrada"
-              iconeVisual="🎫"
+              onClick={() => selecionarVariacao('Só lanche', 0)}
+              nomeOpcao="Só lanche"
             />
             <ProdutoCard
               produto={produtoAtivo}
-              onClick={() => selecionarVariacao('Inteira', produtoAtivo.price)}
-              nomeOpcao="Inteira"
-              precoExtra={produtoAtivo.price}
-              iconeVisual="🎟️"
+              onClick={() => selecionarVariacao('Combo (+R$15)', 15)}
+              nomeOpcao="Combo (+R$15)"
+              precoExtra={15}
             />
           </>
-        ) : produtoAtivo.category.name === 'Bomboniere' || produtoAtivo.category.name === 'Bebidas' ? (
+        ) : produtoAtivo.category.name === 'Bebidas' ? (
           <>
             <ProdutoCard
               produto={produtoAtivo}
               onClick={() => selecionarVariacao('Pequeno', 0)}
               nomeOpcao="Pequeno"
-              fontSize="2rem"
             />
             <ProdutoCard
               produto={produtoAtivo}
               onClick={() => selecionarVariacao('Médio', 3.00)}
               nomeOpcao="Médio"
               precoExtra={3.00}
-              fontSize="2.8rem"
             />
             <ProdutoCard
               produto={produtoAtivo}
               onClick={() => selecionarVariacao('Grande', 5.00)}
               nomeOpcao="Grande"
               precoExtra={5.00}
-              fontSize="3.5rem"
             />
           </>
         ) : (

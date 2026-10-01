@@ -40,23 +40,27 @@ export default function TelaMenu({
 
   const adicionarAoCarrinho = () => {
     executarComAtraso(() => {
-      const nomeCompleto = produtoAtivo.name + " (" + variacaoSelecionada.nome + ")";
       const precoFinal = produtoAtivo.price + variacaoSelecionada.preco;
 
-      const indiceExistente = carrinho.findIndex(item => item.id === produtoAtivo.id && item.name === nomeCompleto);
+      const novoItem = {
+        ...produtoAtivo,
+        name: `${produtoAtivo.name} (${variacaoSelecionada.nome})`,
+        price: precoFinal,
+        variation: variacaoSelecionada,
+        quantity: quantidade,
+        idCarrinho: Date.now()
+      };
+
+      const indiceExistente = carrinho.findIndex(
+        item => item.id === novoItem.id && item.name === novoItem.name
+      );
 
       if (indiceExistente >= 0) {
         const novoCarrinho = [...carrinho];
         novoCarrinho[indiceExistente].quantity += quantidade;
         setCarrinho(novoCarrinho);
       } else {
-        setCarrinho(anterior => [...anterior, {
-          ...produtoAtivo,
-          name: nomeCompleto,
-          price: precoFinal,
-          idCarrinho: Date.now(),
-          quantity: quantidade
-        }]);
+        setCarrinho(anterior => [...anterior, novoItem]);
       }
 
       setProdutoAtivo(null);

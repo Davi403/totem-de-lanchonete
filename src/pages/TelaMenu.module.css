@@ -1,9 +1,35 @@
+/* ==========================================================================
+   VARIÁVEIS DE TEMA (Para fácil manutenção)
+   ========================================================================== */
+:root {
+  --bg-app: #0f172a;        /* Fundo principal (Slate 900) */
+  --bg-panel: #1e293b;      /* Painéis e Cards (Slate 800) */
+  --border-color: #334155;  /* Bordas (Slate 700) */
+  --border-hover: #475569;  /* Bordas em hover (Slate 600) */
+  
+  --text-main: #f8fafc;     /* Texto Principal (Slate 50) */
+  --text-muted: #94a3b8;    /* Texto Secundário (Slate 400) */
+  
+  --accent-blue: #2563eb;   /* Azul principal */
+  --accent-blue-hover: #1d4ed8;
+  --accent-green: #10b981;  /* Verde para dinheiro/sucesso */
+  --accent-green-hover: #059669;
+  --accent-red: #ef4444;    /* Vermelho para cancelar/erro */
+  
+  --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
+/* ==========================================================================
+   ESTRUTURA GERAL
+   ========================================================================== */
 .tela-menu {
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #000;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  user-select: none; /* Ideal para Totem / Touchscreen */
 }
 
 .menu-container {
@@ -12,262 +38,392 @@
   overflow: hidden;
 }
 
+/* ==========================================================================
+   MENU LATERAL (CATEGORIAS)
+   ========================================================================== */
 .menu-lateral {
-  width: 90px;
-  background-color: #fff;
-  border-right: 1px solid #eee;
+  width: 100px;
+  background-color: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 0;
-  gap: 10px;
+  padding: 16px 8px;
+  gap: 12px;
+  scrollbar-width: none; /* Firefox */
 }
 
 .categoria-item {
-  width: 75px;
-  height: 75px;
-  background-color: transparent;
-  border-radius: 4px;
+  width: 84px;
+  height: 84px;
+  background-color: var(--border-color);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5px;
-  font-size: 0.7rem;
-  font-weight: bold;
+  padding: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
   text-align: center;
   cursor: pointer;
-  color: #ccc;
-  border: 1px solid transparent;
-  transition: transform 0.1s;
+  color: var(--text-muted);
+  border: 2px solid transparent;
+  transition: var(--transition-fast);
+}
+
+.categoria-item:hover {
+  background-color: var(--border-hover);
+  color: var(--text-main);
 }
 
 .categoria-item:active {
-  transform: scale(0.92);
+  transform: scale(0.94);
 }
 
 .categoria-ativa {
-  background-color: #0b1b3d;
-  color: #fff;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  border-color: #60a5fa;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
 }
 
+/* ==========================================================================
+   ÁREA DE PRODUTOS
+   ========================================================================== */
 .menu-produtos {
   flex: 1;
-  padding: 15px;
+  padding: 20px;
   overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+/* Estilização da Scrollbar (Webkit) */
+.menu-produtos::-webkit-scrollbar,
+.menu-lateral::-webkit-scrollbar {
+  width: 6px;
+}
+
+.menu-produtos::-webkit-scrollbar-thumb,
+.menu-lateral::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+.menu-produtos::-webkit-scrollbar-thumb:hover {
+  background: var(--border-hover);
 }
 
 .produtos-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 20px;
-  justify-content: center;
-  padding-top: 10px;
+  justify-items: center;
+  padding-bottom: 20px;
 }
 
+/* ==========================================================================
+   CARD DE PRODUTO
+   ========================================================================== */
 .produto-card {
-  width: 140px;
-  height: 180px;
-  background-color: transparent;
+  width: 100%;
+  max-width: 200px;
+  height: 220px;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
+  padding: 16px;
   text-align: center;
   cursor: pointer;
   position: relative;
-  transition: transform 0.1s;
+  transition: var(--transition-fast);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.produto-card:hover {
+  border-color: #3b82f6;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -5px rgba(59, 130, 246, 0.3);
 }
 
 .produto-card:active {
-  transform: scale(0.92);
+  transform: scale(0.96);
 }
 
 .produto-img {
-  font-size: 3rem;
-  margin-bottom: 10px;
+  font-size: 3.5rem;
+  margin-top: 10px;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.produto-card:hover .produto-img {
+  transform: scale(1.15) rotate(-2deg);
 }
 
 .produto-card h3 {
-  font-size: 0.9rem;
-  color: #fff;
-  font-weight: bold;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
 }
 
+/* Badge de Preço */
 .produto-card p {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #fff;
+  top: 12px;
+  right: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--accent-green);
+  background-color: rgba(16, 185, 129, 0.15);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  margin: 0;
+  backdrop-filter: blur(4px);
 }
 
-.options-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.options-container h2 {
-  margin: 20px 0;
-  color: #fff;
-}
-
+/* ==========================================================================
+   TELA DE OPÇÕES E QUANTIDADE (SUBTELAS)
+   ========================================================================== */
+.options-container,
 .quantity-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  height: 100%;
   text-align: center;
-  padding-top: 20px;
+  padding: 20px;
+}
+
+.options-container h2,
+.quantity-container h2 {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: var(--text-main);
+  font-weight: 700;
 }
 
 .quantity-controls {
   display: flex;
   align-items: center;
-  gap: 20px;
-  background-color: #0b1b3d;
-  border-radius: 4px;
-  padding: 5px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  gap: 24px;
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-radius: 50px;
+  padding: 12px 24px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
 }
 
 .btn-qty {
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  border: 1px solid #333;
-  background-color: #0b1b3d;
-  font-size: 2rem;
-  font-weight: bold;
+  border: none;
+  background-color: var(--accent-blue);
+  color: #ffffff;
+  font-size: 1.8rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition-fast);
+}
+
+.btn-qty:hover {
+  background-color: var(--accent-blue-hover);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
 .btn-qty:active {
   transform: scale(0.9);
-  background-color: #e0e0e0;
 }
 
 .qty-display {
-  font-size: 2rem;
-  font-weight: bold;
-  width: 50px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  width: 60px;
+  color: var(--text-main);
 }
 
 .quantity-actions {
   display: flex;
-  gap: 20px;
+  gap: 16px;
   margin-top: 40px;
 }
 
 .btn-voltar-inline {
-  align-self: flex-start;
-  padding: 10px 20px;
+  padding: 14px 28px;
   background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-weight: bold;
+  border: 2px solid var(--border-hover);
+  color: #cbd5e1;
+  border-radius: 12px;
+  font-weight: 600;
   cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-voltar-inline:hover {
+  border-color: var(--text-muted);
+  color: var(--text-main);
 }
 
 .btn-adicionar {
-  padding: 15px 30px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: white;
-  background-color: #1d3557;
-  border: 1px solid #333;
-  border-radius: 4px;
+  padding: 14px 36px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--accent-green);
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.1s;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+  transition: var(--transition-fast);
+}
+
+.btn-adicionar:hover {
+  background-color: var(--accent-green-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
 }
 
 .btn-adicionar:active {
   transform: scale(0.95);
 }
 
+/* ==========================================================================
+   RODAPÉ (CARRINHO E AÇÕES)
+   ========================================================================== */
 .menu-rodape {
-  height: 100px;
-  background-color: #0b1b3d;
-  border-top: 1px solid #ddd;
+  height: 90px;
+  background-color: var(--bg-panel);
+  border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px;
-  box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+  padding: 0 24px;
+  box-shadow: 0 -4px 25px rgba(0, 0, 0, 0.3);
+  z-index: 10;
 }
 
 .info-pedido {
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .valor-total {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--accent-green);
+  letter-spacing: -0.5px;
 }
 
 .qtd-itens {
-  color: #777;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
 .botoes-rodape {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-cancelar {
-  padding: 15px 20px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #c00;
-  border: 1px solid #c00;
-  border-radius: 4px;
+  padding: 14px 24px;
+  font-weight: 600;
+  color: #fca5a5;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.1s;
+  transition: var(--transition-fast);
+}
+
+.btn-cancelar:hover {
+  background-color: var(--accent-red);
+  color: #ffffff;
 }
 
 .btn-concluir {
-  padding: 15px 20px;
-  font-weight: bold;
-  color: #fff;
-  background-color: #1d3557;
-  border: 1px solid #1d3557;
-  border-radius: 4px;
+  padding: 14px 28px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #ffffff;
+  background-color: var(--accent-blue);
+  border: none;
+  border-radius: 12px;
   cursor: pointer;
-  transition: transform 0.1s;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: var(--transition-fast);
 }
 
-.btn-cancelar:active, .btn-concluir:active {
+.btn-concluir:hover:not(:disabled) {
+  background-color: var(--accent-blue-hover);
+  transform: translateY(-2px);
+}
+
+.btn-cancelar:active,
+.btn-concluir:active:not(:disabled) {
   transform: scale(0.95);
 }
 
 .btn-concluir:disabled {
-  background-color: #ccc;
+  background-color: var(--border-color);
+  color: #64748b;
+  box-shadow: none;
   cursor: not-allowed;
   transform: none;
 }
 
-@media (min-width: 600px) {
+/* ==========================================================================
+   MEDIA QUERIES (TELAS MAIORES / TOTEM HIGH-RES)
+   ========================================================================== */
+@media (min-width: 768px) {
   .menu-lateral {
-    width: 140px;
+    width: 130px;
+    padding: 20px 10px;
+    gap: 16px;
   }
+
   .categoria-item {
-    width: 120px;
-    height: 120px;
-    font-size: 1rem;
+    width: 100px;
+    height: 100px;
+    font-size: 0.9rem;
+    border-radius: 16px;
   }
+
+  .produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+  }
+
   .produto-card {
-    width: 220px;
+    max-width: none;
     height: 260px;
+    padding: 20px;
   }
+
   .produto-img {
-    font-size: 8rem;
+    font-size: 5rem;
   }
-  .produto-card h3, .produto-card p {
-    font-size: 1.2rem;
+
+  .produto-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .produto-card p {
+    font-size: 0.95rem;
+    top: 14px;
+    right: 14px;
   }
 }
